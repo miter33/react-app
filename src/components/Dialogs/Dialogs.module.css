@@ -1,0 +1,32 @@
+.dialogs {
+    display: grid;
+    grid-template-rows: 3fr 2fr;
+    grid-template-columns: 2fr 6fr;
+    grid-template-areas: 'item message'
+                         'item dispatch';
+}
+
+.dialogsItems {
+    background-color: darkkhaki;
+    padding: 10px;
+    grid-area: item;
+}
+
+.dialogsItems .active {
+    background-color: gold;
+}
+
+.messages {
+    background-color: aquamarine;
+    padding: 10px;
+    grid-area: message;
+}
+
+.dialogsItems a {
+    background-color: orange;
+}
+
+.sendMessage {
+    grid-area: dispatch;
+}
+
