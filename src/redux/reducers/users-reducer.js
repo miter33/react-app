@@ -1,4 +1,11 @@
-﻿import {SET_CURRENT_PAGE, FOLLOW, SET_USERS, UNFOLLOW, SET_TOTAL_USERS_COUNT} from "../actions/users-actions";
+﻿import {
+    SET_CURRENT_PAGE,
+    FOLLOW,
+    SET_USERS,
+    UNFOLLOW,
+    SET_TOTAL_USERS_COUNT,
+    TOGGLE_IS_FETCHING
+} from "../actions/users-actions";
 
 let initialState = {
     users: [
@@ -38,7 +45,8 @@ let initialState = {
     ],
     pageSize: 5,
     totalUsersCount: 21,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -81,6 +89,12 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 totalUsersCount: action.totalUsersCount
+            }
+        }
+        case TOGGLE_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.isFetching
             }
         }
         default:
