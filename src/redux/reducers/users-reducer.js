@@ -1,4 +1,4 @@
-﻿import {FOLLOW, SET_USERS, UNFOLLOW} from "../actions/users-actions";
+﻿import {SET_CURRENT_PAGE, FOLLOW, SET_USERS, UNFOLLOW, SET_TOTAL_USERS_COUNT} from "../actions/users-actions";
 
 let initialState = {
     users: [
@@ -36,7 +36,9 @@ let initialState = {
         //     }
         // }
     ],
-    // usersCountOnPage: 4
+    pageSize: 5,
+    totalUsersCount: 21,
+    currentPage: 1
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -66,8 +68,20 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS: {
             return  {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
             };
+        }
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {
+                ...state,
+                totalUsersCount: action.totalUsersCount
+            }
         }
         default:
             return state;
