@@ -15,8 +15,11 @@ class UsersContainer extends React.Component {
         this.props.toggleIsFetching(true);
         if (this.props.users.length === 0) {
             axios.get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                    withCredentials: true
+                })
                 .then(response => {
+                    debugger
                     this.props.toggleIsFetching(false);
                     this.props.setUsers(response.data.items)
                     this.props.setTotalUsersCount(response.data.totalCount)
@@ -30,10 +33,44 @@ class UsersContainer extends React.Component {
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(pageNumber)
         axios.get(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+                withCredentials: true
+            })
             .then(response => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
+            })
+    }
+    
+    follow = (userId) => {
+        axios.post(
+            `https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {},{
+                withCredentials: true,
+                headers: {
+                    'API-KEY': 'a9363b3d-a74f-4ccd-850c-cb1fc1eaeec4'
+                }
+            })
+            .then(response => {
+                debugger
+                if(response.data.resultCode === 0) {
+                    this.props.follow(userId);
+                }
+            })
+    }
+
+    unfollow = (userId) => {
+        axios.delete(
+            `https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
+                withCredentials: true,
+                headers: {
+                    'API-KEY': 'a9363b3d-a74f-4ccd-850c-cb1fc1eaeec4'
+                }
+            })
+            .then(response => {
+                debugger
+                if(response.data.resultCode === 0) {
+                    this.props.unfollow(userId);
+                }
             })
     }
 
@@ -46,8 +83,8 @@ class UsersContainer extends React.Component {
                     pageSize={this.props.pageSize}
                     users={this.props.users}
                     currentPage={this.props.currentPage}
-                    unfollow={this.props.unfollow}
-                    follow={this.props.follow}
+                    unfollow={this.unfollow}
+                    follow={this.follow}
                     onPageChanged={this.onPageChanged}
                     toggleIsFetching={this.props.toggleIsFetching}
                 />
