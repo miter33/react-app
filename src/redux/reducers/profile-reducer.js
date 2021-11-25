@@ -1,4 +1,6 @@
-﻿import {ADD_POST, SET_USER_PROFILE, UPDATE_NEW_POST_TEXT} from "../actions/profile-actions";
+﻿import {ADD_POST, SET_USER_PROFILE, setUserProfile, UPDATE_NEW_POST_TEXT} from "../actions/profile-actions";
+import {setCurrentPage, setUsers, toggleIsFetching} from "../actions/users-actions";
+import {profileAPI, usersAPI} from "../../api/api";
 
 let initialState = {
     posts: [
@@ -37,6 +39,15 @@ const profileReducer = (state = initialState, action) => {
         }
         default:
             return state;
+    }
+}
+
+export const getUserProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+        profileAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data));
+            })
     }
 }
 

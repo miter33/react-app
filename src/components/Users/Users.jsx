@@ -9,7 +9,7 @@ let Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-    
+
     return (
         <div>
             <div>
@@ -33,15 +33,27 @@ let Users = (props) => {
                                         <img
                                             alt={user.name}
                                             src={user.photos.small ?? personPhoto}
-                                            className={style.userPhoto} 
+                                            className={style.userPhoto}
                                         />
                                     </NavLink>
                                 </div>
                                 <div>
                                     {
                                         user.followed ?
-                                            <button onClick={() => props.unfollow(user.id)}>Unfollow</button> :
-                                            <button onClick={() => props.follow(user.id)}>Follow</button>
+                                            <button
+                                                disabled={props.followingInProgress.some(id => id === user.id)}
+                                                onClick={() => { props.unfollow(user.id) }
+                                                }
+                                            >
+                                                Unfollow
+                                            </button> :
+                                            <button
+                                                disabled={props.followingInProgress.some(id => id === user.id)}
+                                                onClick={() => { props.follow(user.id) }
+                                                }
+                                            >
+                                                Follow
+                                            </button>
                                     }
                                 </div>
                             </span>

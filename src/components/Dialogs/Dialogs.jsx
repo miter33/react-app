@@ -2,6 +2,7 @@
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import React from "react";
+import {Navigate} from "react-router";
 
 const Dialogs = (props) => {
     let onSendMessageClick = () => {
@@ -12,6 +13,7 @@ const Dialogs = (props) => {
         let text = event.target.value;
         props.newMessageChange(text);
     }
+    
     return (
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>

@@ -4,6 +4,7 @@ export const SET_USERS = 'SET-USERS';
 export const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 export const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 export const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
+export const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS';
 
 export const follow = (userId) => ({
     type: FOLLOW,
@@ -33,4 +34,10 @@ export const setTotalUsersCount = (totalUsersCount) => ({
 export const toggleIsFetching = (isFetching) => ({
     type: TOGGLE_IS_FETCHING,
     isFetching: isFetching
+})
+
+export const toggleFollowingProgress = (isFetching, userId) => ({
+    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    isFetching: isFetching,
+    userId: userId
 })

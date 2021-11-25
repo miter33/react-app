@@ -1,4 +1,6 @@
-﻿import {SET_USER_DATA} from "../actions/auth-actions";
+﻿import {SET_USER_DATA, setUserData} from "../actions/auth-actions";
+import {authAPI, profileAPI} from "../../api/api";
+import {setUserProfile} from "../actions/profile-actions";
 
 let initialState = {
     userId: null,
@@ -19,6 +21,18 @@ const authReducer = (state = initialState, action) => {
         }
         default:
             return state;
+    }
+}
+
+export const loginThunkCreator = () => {
+    return (dispatch) => {
+        authAPI.login()
+            .then(response => {
+                if (response.resultCode === 0) {
+                    const {id, email, login} = response.data;
+                    dispatch(setUserData(id, email, login));
+                }
+            })
     }
 }
 
