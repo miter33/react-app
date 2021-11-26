@@ -5,7 +5,8 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 const Profile = (props) => {
     return (
         <div>
-            <ProfileInfo 
+            <ProfileInfo
+                personalId={props.personalId}
                 userProfile={props.userProfile}
                 status={props.status}
                 updateUserStatus={props.updateUserStatusThunkCreator}

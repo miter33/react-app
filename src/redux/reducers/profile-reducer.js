@@ -66,9 +66,9 @@ export const getUserProfileThunkCreator = (userId) => {
 
 export const getUserStatusThunkCreator = (userId) => {
     return (dispatch) => {
+        // profileAPI.updateUserStatus('Hello').then();
         profileAPI.getUserStatus(userId)
             .then(status => {
-                debugger
                 dispatch(setUserStatus(status.data));
             })
     }
@@ -78,7 +78,6 @@ export const updateUserStatusThunkCreator = (status) => {
     return (dispatch) => {
         profileAPI.updateUserStatus(status)
             .then(response => {
-                debugger
                 if(response.data.resultCode === 0) {
                     dispatch(setUserStatus(status));
                 }
