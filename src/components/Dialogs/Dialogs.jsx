@@ -2,18 +2,14 @@
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import React from "react";
-import {Navigate} from "react-router";
+import {Field, reduxForm} from "redux-form";
+import AddMessageForm from "./AddMessageForm";
 
 const Dialogs = (props) => {
-    let onSendMessageClick = () => {
-        props.sendMessageClick();
+    let addNewMessage = (values) => {
+        props.sendMessageClick(values.newMessageBody);
     }
 
-    let onNewMessageChange = (event) => {
-        let text = event.target.value;
-        props.newMessageChange(text);
-    }
-    
     return (
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>
@@ -28,20 +24,13 @@ const Dialogs = (props) => {
                     }
                 </div>
             </div>
-            <div className={c.sendMessage}>
-                <div>
-                    <textarea
-                        placeholder='Enter your message'
-                        onChange={onNewMessageChange}
-                        value={props.newMessageBody}
-                    />
-                </div>
-                <div>
-                    <button onClick={onSendMessageClick}>Send message</button>
-                </div>
-            </div>
+            <AddMessageForm onSubmit={addNewMessage} />
         </div>
     )
 }
+
+
+
+
 
 export default Dialogs

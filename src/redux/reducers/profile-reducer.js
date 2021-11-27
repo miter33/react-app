@@ -2,11 +2,9 @@
     ADD_POST,
     SET_USER_PROFILE, SET_USER_STATUS,
     setUserProfile,
-    setUserStatus,
-    UPDATE_NEW_POST_TEXT
+    setUserStatus
 } from "../actions/profile-actions";
-import {setCurrentPage, setUsers, toggleIsFetching} from "../actions/users-actions";
-import {profileAPI, usersAPI} from "../../api/api";
+import {profileAPI} from "../../api/api";
 
 let initialState = {
     posts: [
@@ -14,8 +12,7 @@ let initialState = {
         {id: 2, message: 'This is my first post', likesCount: 15}
     ],
     userProfile: null,
-    status: '',
-    newPostText: 'it-kamasutra.com'
+    status: ''
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -23,19 +20,12 @@ const profileReducer = (state = initialState, action) => {
         case ADD_POST: {
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             };
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
-            }
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
+                posts: [...state.posts, newPost]
             }
         }
         case SET_USER_PROFILE: {

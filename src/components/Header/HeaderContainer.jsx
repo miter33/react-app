@@ -1,11 +1,11 @@
 ﻿import Header from "./Header";
 import React from 'react'
 import {connect} from "react-redux";
-import {loginThunkCreator} from "../../redux/reducers/auth-reducer";
+import {getMeThunkCreator} from "../../redux/reducers/auth-reducer";
 
 class HeaderContainer extends React.Component{
     componentDidMount() {
-        this.props.loginThunkCreator();
+        this.props.getMeThunkCreator();
     }
 
     render() {
@@ -22,4 +22,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {loginThunkCreator})(HeaderContainer);
+export default connect(mapStateToProps, {getMeThunkCreator: getMeThunkCreator})(HeaderContainer);
