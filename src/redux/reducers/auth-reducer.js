@@ -1,6 +1,7 @@
 ﻿import {SET_USER_DATA, setUserData} from "../actions/auth-actions";
 import {authAPI, profileAPI} from "../../api/api";
 import {setUserProfile} from "../actions/profile-actions";
+import {stopSubmit} from "redux-form";
 
 let initialState = {
     userId: null,
@@ -25,7 +26,7 @@ const authReducer = (state = initialState, action) => {
 
 export const getMeThunkCreator = () => {
     return (dispatch) => {
-        authAPI.me()
+        return authAPI.me()
             .then(response => {
                 if (response.resultCode === 0) {
                     const {id, email, login} = response.data;
@@ -39,9 +40,11 @@ export const loginThunkCreator = (email, password, rememberMe) => {
     return (dispatch) => {
         authAPI.login(email, password, rememberMe)
             .then(response => {
-                debugger
                 if (response.resultCode === 0) {
                     dispatch(getMeThunkCreator());
+                } else {
+                    let message = response.messages.length > 0 ? response.messages[0] : 'Some error';
+                    dispatch(stopSubmit('login', {_error: message}));
                 }
             })
     }

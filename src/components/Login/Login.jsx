@@ -4,6 +4,7 @@ import {requiredField} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/reducers/auth-reducer";
 import {Navigate} from "react-router-dom";
+import style from '../common/FormsControls/FormsControls.module.css'
 
 const LoginForm = (props) => {
     return (
@@ -34,6 +35,12 @@ const LoginForm = (props) => {
             <div>
                 <button>Login</button>
             </div>
+            {
+                props.error &&
+                <div className={style.errorSummary}>
+                    {props.error}
+                </div>
+            }
         </form>
     )
 }
@@ -46,7 +53,7 @@ const Login = (props) => {
     const onSubmit = (formData) => {
         props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
     }
-    debugger
+    
     if(props.isAuth) {
         return <Navigate to={'/profile'} />
     }
