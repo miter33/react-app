@@ -6,9 +6,9 @@ import {loginThunkCreator} from "../../redux/reducers/auth-reducer";
 import {Navigate} from "react-router-dom";
 import style from '../common/FormsControls/FormsControls.module.css'
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field
                     placeholder={'Email'}
@@ -36,9 +36,9 @@ const LoginForm = (props) => {
                 <button>Login</button>
             </div>
             {
-                props.error &&
+                error &&
                 <div className={style.errorSummary}>
-                    {props.error}
+                    {error}
                 </div>
             }
         </form>
