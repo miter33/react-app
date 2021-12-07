@@ -27,7 +27,6 @@ const AddNewPostForm  = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-
                 <Field
                     component={Textarea}
                     name='newPostText'
