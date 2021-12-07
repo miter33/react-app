@@ -1,5 +1,5 @@
-﻿import {SET_CAPTCHA_URL, SET_USER_DATA, setCaptchaUrl, setUserData} from "../actions/auth-actions";
-import {authAPI, securityAPI} from "../../api/api";
+﻿import {SET_USER_DATA, setUserData} from "../actions/auth-actions";
+import {authAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
 let initialState = {
@@ -7,8 +7,7 @@ let initialState = {
   email: null,
   login: null,
   isAuth: false,
-  isFetching: true,
-  captchaUrl: null
+  isFetching: true
 }
 
 const authReducer = (state = initialState, action) => {
@@ -17,12 +16,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.data
-      }
-    }
-    case SET_CAPTCHA_URL: {
-      return {
-        ...state,
-        captchaUrl: action.url
       }
     }
     default:
@@ -41,18 +34,15 @@ export const getMeThunkCreator = () => {
   }
 }
 
-export const loginThunkCreator = (email, password, rememberMe, captcha) => {
+export const loginThunkCreator = (email, password, rememberMe) => {
   return async (dispatch) => {
-    let response = await authAPI.login(email, password, rememberMe, captcha)
+    let response = await authAPI.login(email, password, rememberMe)
 
     if (response.resultCode === 0) {
       dispatch(getMeThunkCreator());
     } else {
-      if(response.resultCode === 10) {
-      }
-        dispatch(getCaptchaUrl());
-      // let message = response.messages.length > 0 ? response.messages[0] : 'Some error';
-      // dispatch(stopSubmit('login', {_error: message}));
+      let message = response.messages.length > 0 ? response.messages[0] : 'Some error';
+      dispatch(stopSubmit('login', {_error: message}));
     }
   }
 }
@@ -64,14 +54,6 @@ export const logoutThunkCreator = () => {
     if (response.resultCode === 0) {
       dispatch(setUserData(null, null, null, false));
     }
-  }
-}
-
-export const getCaptchaUrl = () => {
-  return async (dispatch) => {
-    let response = await securityAPI.getCaptchaUrl();
-    const captchaUrl = response.url;
-    dispatch(setCaptchaUrl(captchaUrl));
   }
 }
 

@@ -43,6 +43,7 @@ class App extends React.Component {
                             element={<ProfileContainer/>}
                         />
                         <Route
+                            exact
                             path='/profile/:userId'
                             element={<ProfileContainer/>}
                         />

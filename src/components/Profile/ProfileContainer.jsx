@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Navigate, useParams} from 'react-router';
 import {
     getUserProfileThunkCreator,
-    getUserStatusThunkCreator, savePhoto, saveProfile,
+    getUserStatusThunkCreator,
     updateUserStatusThunkCreator
 } from "../../redux/reducers/profile-reducer";
 import {compose} from "redux";
@@ -15,13 +15,6 @@ class ProfileObtained extends React.Component {
     componentDidMount() {
         this.props.getUserProfileThunkCreator(this.props.userId);
         this.props.getUserStatusThunkCreator(this.props.userId);
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.userId !== this.props.userId) {
-            this.props.getUserProfileThunkCreator(this.props.userId);
-            this.props.getUserStatusThunkCreator(this.props.userId);
-        }
     }
 
     render() {
@@ -35,7 +28,7 @@ const ProfileContainer = (props) => {
     let {userId} = useParams();
     userId = userId ?? props.personalId;
     return (
-        <ProfileObtained {...props} userId={userId}/>
+        <ProfileObtained {...props} userId={userId} />
     )
 }
 
@@ -51,8 +44,5 @@ export default compose(
     connect(mapStateToProps, {
         getUserProfileThunkCreator,
         getUserStatusThunkCreator,
-        updateUserStatusThunkCreator,
-        savePhoto,
-        saveProfile
-    }), withAuthRedirect
+        updateUserStatusThunkCreator}), withAuthRedirect
 )(ProfileContainer);

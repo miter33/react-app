@@ -6,7 +6,7 @@ import {loginThunkCreator} from "../../redux/reducers/auth-reducer";
 import {Navigate} from "react-router-dom";
 import style from '../common/FormsControls/FormsControls.module.css'
 
-const LoginForm = ({handleSubmit, error, captchaUrl}) => {
+const LoginForm = ({handleSubmit, error}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -18,31 +18,20 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
                 />
             </div>
             <div>
-                <Field
-                    placeholder={'Password'}
-                    name={'password'}
+                <Field 
+                    placeholder={'Password'} 
+                    name={'password'} 
                     component={Input}
                     validate={[requiredField]}
                 />
             </div>
             <div>
-                <Field
+                <Field 
                     type={'checkbox'}
-                    name={'rememberMe'}
-                    component={Input}
+                    name={'rememberMe'} 
+                    component={Input} 
                 /> remember me
             </div>
-            {
-                captchaUrl &&
-                <div>
-                    <img src={captchaUrl}/>
-                    <Field
-                        name={'captcha'}
-                        component={Input}
-                        validate={[requiredField]}
-                    />
-                </div>
-            }
             <div>
                 <button>Login</button>
             </div>
@@ -56,38 +45,31 @@ const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     )
 }
 
-const LoginReduxForm = reduxForm(
-    {
-        form: 'login'
-    }
-)(LoginForm);
+const LoginReduxForm = reduxForm({
+    form: 'login'
+})(LoginForm);
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
     }
-
-    if (props.isAuth) {
-        return <Navigate to={'/profile'}/>
+    
+    if(props.isAuth) {
+        return <Navigate to={'/profile'} />
     }
-
+    
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+            <LoginReduxForm onSubmit={onSubmit} />
         </div>
     )
 }
 
 let mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
+        isAuth: state.auth.isAuth
     }
 }
 
-export default connect(mapStateToProps,
-    {
-        loginThunkCreator
-    }
-)(Login);
+export default connect(mapStateToProps, {loginThunkCreator})(Login);
