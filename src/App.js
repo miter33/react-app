@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {Navigate, Route, Routes} from "react-router-dom";
-// import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -13,11 +12,9 @@ import {initializeApp} from "./redux/reducers/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-// const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-// const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-// const HeaderContainer = React.lazy(() => import('./components/Header/HeaderContainer'));
 
 const SuspenseDialogs = withSuspense(DialogsContainer);
+
 class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
@@ -58,6 +55,10 @@ class App extends React.Component {
                             exact
                             path='/'
                             element={<Navigate to={'/profile'}/>}
+                        />
+                        <Route
+                            path='*'
+                            element={<div>404 Not Found</div>}
                         />
                     </Routes>
                 </div>

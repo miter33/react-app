@@ -73,9 +73,13 @@ export const getUserStatusThunkCreator = (userId) => async (dispatch) => {
 
 
 export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
-  let response = await profileAPI.updateUserStatus(status)
-  if (response.data.resultCode === 0) {
-    dispatch(setUserStatus(status));
+  try {
+    let response = await profileAPI.updateUserStatus(status)
+    if (response.data.resultCode === 0) {
+      dispatch(setUserStatus(status));
+    }
+  } catch (error) {
+    debugger
   }
 }
 

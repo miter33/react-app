@@ -49,10 +49,10 @@ export const loginThunkCreator = (email, password, rememberMe, captcha) => {
       dispatch(getMeThunkCreator());
     } else {
       if(response.resultCode === 10) {
-      }
         dispatch(getCaptchaUrl());
-      // let message = response.messages.length > 0 ? response.messages[0] : 'Some error';
-      // dispatch(stopSubmit('login', {_error: message}));
+      }
+      let message = response.messages.length > 0 ? response.messages[0] : 'Some error';
+      dispatch(stopSubmit('login', {_error: message}));
     }
   }
 }
