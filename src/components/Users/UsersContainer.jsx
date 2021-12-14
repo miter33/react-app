@@ -13,17 +13,17 @@ import {
     getCurrentPageSelector,
     getFollowingInProgressSelector,
     getIsFetchingSelector,
-    getPageSizeSelector, getTotalUsersCountSelector,
+    getPageSizeSelector, getTotalUsersCountSelector, getUsersFilter,
     getUsersSelector
 } from "../../redux/selectors/users-selectors";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.getUserThunkCreator(this.props.users, this.props.currentPage, this.props.pageSize);
+        this.props.getUserThunkCreator(this.props.currentPage, this.props.pageSize, '');
     }
     
     onPageChanged = (pageNumber) => {
-        this.props.changeUserPageThunkCreator(pageNumber, this.props.pageSize);
+        this.props.getUserThunkCreator(pageNumber, this.props.pageSize, this.props.filter.term, this.props.filter.friend);
     }
     
     follow = (userId) => {
@@ -32,6 +32,11 @@ class UsersContainer extends React.Component {
     
     unfollow = (userId) => {
         this.props.unfollowThunkCreator(userId);
+    }
+    
+    onFilterChanged = (filter) => {
+        const {pageSize} = this.props;
+        this.props.getUserThunkCreator(1, pageSize, filter.term, filter.friend);
     }
     
     render() {
@@ -48,22 +53,12 @@ class UsersContainer extends React.Component {
                     onPageChanged={this.onPageChanged}
                     toggleIsFetching={this.props.toggleIsFetching}
                     followingInProgress={this.props.followingInProgress}
+                    onFilterChanged={this.onFilterChanged}
                 />
             </>
         )
     }
 }
-
-// let mapStateToProps = (state) => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress
-//     }
-// }
 
 let mapStateToProps = (state) => {
     return {
@@ -72,13 +67,13 @@ let mapStateToProps = (state) => {
         totalUsersCount: getTotalUsersCountSelector(state),
         currentPage: getCurrentPageSelector(state),
         isFetching: getIsFetchingSelector(state),
-        followingInProgress: getFollowingInProgressSelector(state)
+        followingInProgress: getFollowingInProgressSelector(state),
+        filter: getUsersFilter(state)
     }
 }
 
 export default compose(connect(mapStateToProps, {
     getUserThunkCreator,
-    changeUserPageThunkCreator,
     followThunkCreator,
     unfollowThunkCreator
 }))(UsersContainer);

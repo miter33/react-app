@@ -5,6 +5,7 @@ export const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 export const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 export const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 export const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS';
+export const SET_FILTER = 'SET-FILTER';
 
 export const follow = (userId) => ({
     type: FOLLOW,
@@ -40,4 +41,9 @@ export const toggleFollowingProgress = (isFetching, userId) => ({
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching: isFetching,
     userId: userId
+})
+
+export const setFilter = (filter) => ({
+    type: SET_FILTER,
+    filter: filter
 })
