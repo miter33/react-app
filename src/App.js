@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {Navigate, Route, Routes} from "react-router-dom";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersPage from "./components/Users/UsersPage";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -45,7 +45,7 @@ class App extends React.Component {
                         />
                         <Route
                             path='/users'
-                            element={<UsersContainer/>}
+                            element={<UsersPage />}
                         />
                         <Route
                             path='/login'

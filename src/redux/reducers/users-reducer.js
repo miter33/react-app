@@ -94,12 +94,12 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const getUserThunkCreator = (currentPage, pageSize, term = '', friend = null) => async (dispatch) => {
+export const getUserThunkCreator = (currentPage, pageSize, filter) => async (dispatch) => {
     dispatch(toggleIsFetching(true));
     dispatch(toggleIsFetching(false));
     dispatch(setCurrentPage(currentPage));
-    dispatch(setFilter({term, friend}));
-    let data = await usersAPI.getUsers(currentPage, pageSize, term, friend)
+    dispatch(setFilter(filter));
+    let data = await usersAPI.getUsers(currentPage, pageSize, filter)
     dispatch(setUsers(data.items));
     dispatch(setTotalUsersCount(data.totalCount));
 }
