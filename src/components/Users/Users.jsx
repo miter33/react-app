@@ -12,7 +12,7 @@ import {
 } from "../../redux/selectors/users-selectors";
 import {useDispatch, useSelector} from "react-redux";
 import {followThunkCreator, getUserThunkCreator, unfollowThunkCreator} from "../../redux/reducers/users-reducer";
-import {useLocation, useNavigate} from "react-router";
+import {useLocation} from "react-router";
 import * as queryString from "querystring"
 import {createBrowserHistory} from 'history';
 
@@ -40,7 +40,7 @@ let Users = (props) => {
         if(currentPage !== 1) query.page = String(currentPage);
         const queryParams = queryString.stringify(query);
         
-        createBrowserHistory().push(`/users?${queryParams}`);
+        createBrowserHistory().push(`/developers${queryParams && '?' + queryParams}`);
     }, [filter, currentPage]);
 
     useEffect(() => {
