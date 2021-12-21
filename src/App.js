@@ -13,6 +13,7 @@ import 'antd/dist/antd.css';
 import {Breadcrumb, Button, Layout, Menu} from "antd";
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons';
 import AppHeader from "./components/Header/AppHeader";
+import ChatPage from "./pages/chat/ChatPage";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
@@ -102,7 +103,7 @@ class App extends React.Component {
                                     <Menu.Item key="8">option8</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub3" icon={<NotificationOutlined/>} title="subnav 3">
-                                    <Menu.Item key="9">option9</Menu.Item>
+                                    <Menu.Item key="9"><Link exact to='/chat'>Chat</Link></Menu.Item>
                                     <Menu.Item key="10">option10</Menu.Item>
                                     <Menu.Item key="11">option11</Menu.Item>
                                     <Menu.Item key="12">option12</Menu.Item>
@@ -131,6 +132,10 @@ class App extends React.Component {
                                 <Route
                                     path='/login'
                                     element={<Login/>}
+                                />
+                                <Route
+                                    path='/chat'
+                                    element={<ChatPage/>}
                                 />
                                 <Route
                                     exact
